@@ -1,0 +1,206 @@
+<MainWidget>:
+    canvas.before:
+        Rectangle:
+            source: app.location + "\\background.png"
+            pos: self.pos
+            size: self.size
+#
+#
+#
+<MainScreen>:
+    path: ""
+    MDGridLayout:
+        cols: 1
+        pos_hint: {"center_x": .5, "center_y": .4}
+        adaptive_height: True
+        spacing: 60
+
+        AnchorLayout:
+            anchor_x: "center"
+
+            FloatLayout:
+                size_hint: None, None
+                width: 489 // app.scale
+                height: 75 // app.scale
+
+                Image:
+                    opacity: .4
+                    source: app.location + "\\shd_input.png"
+                    size_hint: None, None
+                    width: 513 // app.scale 
+                    height: 99 // app.scale 
+                    center: self.parent.center
+                    keep_ratio: True
+                    allow_stretch: True
+
+                Image:
+                    source: app.location + "\\input.png"
+                    pos: self.parent.pos
+                    keep_ratio: False
+                    allow_stretch: True
+  
+                GlassInput:
+                    id: input
+                    
+        AnchorLayout:
+            anchor_x: "center"
+            size_hint: 1, None
+            height: 75 // app.scale
+
+            MDGridLayout:
+                cols: 2
+                size_hint: None, 1
+                width: 489 // app.scale
+
+                GlassButton:
+                    text: "VIEW"
+                    image: app.location + "\\l_button.png"
+                    anchor_x: "left"
+                    action: root.redirect_to_view
+            
+                GlassButton:
+                    text: "SAVE"
+                    image: app.location + "\\r_button.png"
+                    anchor_x: "right"
+                    action: root.save_keys_file
+
+#
+#
+#
+<GlassInput>:
+    multiline: False
+    size_hint: None, None
+    width: 415 // app.scale
+    center_x: self.parent.center_x 
+    y: self.parent.y - 5
+    color_mode: "custom"
+    line_color_normal: 1, 1, 1, .7
+    line_color_focus: 0, 0, 0, .28
+    font_size: 32 // app.scale
+    on_text: self.parent.parent.parent.parent.path = self.text
+#
+#
+#
+<GlassButton>:
+    text: ""
+    image: ""
+    action: None
+
+    FloatLayout:
+        size_hint: None, None
+        width: 227 // app.scale 
+        height: 75 // app.scale 
+        
+        Image:
+            opacity: .25
+            source: app.location + "\\shd_button.png"
+            size_hint: None, None
+            width: 251 // app.scale 
+            height: 99 // app.scale 
+            center: self.parent.center
+            keep_ratio: True
+            allow_stretch: True
+            
+        Image:
+            source: root.image
+            keep_ratio: False
+            allow_stretch: True
+            pos: self.parent.pos
+
+        MDFlatButton:
+            size_hint: 1, 1
+            theme_text_color: "Hint"
+            pos: self.parent.pos
+            opacity: .6
+            on_release: root.action()
+
+        Label:
+            x: self.parent.x
+            y: self.parent.y - 6 // app.scale
+            text: root.text
+            font_size: 50 // app.scale
+            font_name: app.location + "\\Candara.ttf"
+            # color: .7, .25, .50, .9
+            color: 0, 0, 0, .28
+#
+#
+#
+<ViewScreen>:
+    ScrollView:
+        size_hint: 1, .9
+        center: root.center
+
+        StackLayout:
+            id: layout
+            size_hint: 1, None
+            height: self.minimum_height
+            padding: [47 // app.scale, 0]
+            spacing: 62 // app.scale
+
+    MDIconButton:
+        center: root.width - 20, root.height - 20
+        icon: "close"
+        theme_text_color: "Custom"
+        text_color: 0, 0, 0, .4
+        on_release: root.redirect_to_main()
+#
+#
+#
+<KeyCard>:
+    size_hint: None, None
+    width: 92 // app.scale if not root.is_wide else 258 // app.scale
+    height: 92 // app.scale
+
+    FloatLayout: 
+        Image:
+            opacity: .4
+            source: app.location + "\\shd_key_button.png" if not root.is_wide else app.location + "\\shd_key_button_wide.png" 
+            size_hint: None, None
+            width: 110 // app.scale if not root.is_wide else 276 // app.scale
+            height: 110 // app.scale 
+            center: self.parent.center
+            keep_ratio: True
+            allow_stretch: True
+            
+        Image:
+            opacity: .7
+            source: app.location + "\\key_button.png" if not root.is_wide else app.location + "\\key_button_wide.png"
+            keep_ratio: False
+            allow_stretch: True
+            pos: self.parent.pos
+
+        Label:
+            x: self.parent.x
+            y: self.parent.y - 8 // app.scale
+            text: root.key
+            font_size: (60 - 2 * len(self.text)) // app.scale
+            font_name: app.location + "\\Candara.ttf"
+            color: 0, 0, 0, .28
+
+        Label:
+            center: root.x+root.width - 10 // app.scale, root.y + 10 // app.scale
+            text: root.count
+            size_hint: None, None
+            size: 45 // app.scale, 45 // app.scale
+            font_size: (26 - 2*len(self.text)) // app.scale
+            font_name: app.location + "\\Candara.ttf"
+            color: 0, 0, 0, .4
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, .9
+                Ellipse:
+                    pos: self.pos
+                    size: self.size
+
+        
+        
+    
+
+
+
+
+  
+
+        
+
